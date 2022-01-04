@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: abb-helm-sample
+  namespace: apps
+spec:
+  releaseName: helm-sample
+  targetNamespace: apps
+  chart:
+    spec:
+      chart: ./charts/helm-sample
+      version: "0.0.1"
+      sourceRef:
+        kind: GitRepository
+        name: apps
+        namespace: apps
+  interval: 30s
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  values:
+    ingress:
+      dnsName: web.internal.name.com
