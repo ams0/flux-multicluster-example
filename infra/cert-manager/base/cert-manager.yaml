@@ -13,7 +13,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: cert-manager
-        namespace: cluster-config
+        namespace: cert-manager
   interval: 30s
   install:
     createNamespace: true
