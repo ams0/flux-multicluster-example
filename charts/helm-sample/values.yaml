@@ -1,0 +1,22 @@
+app:
+  name: app-nginx
+  replicaCount: 1
+  container:
+    image: nginx:latest
+    port: 80
+  service:
+    type: ClusterIP
+    port: 80
+  env:
+  - key: EnvironmentVariable
+    value: "test"
+  
+ingress:
+  name: app-ingress-nginx
+  replicaCount: 1
+  dnsName: yourdnsname.westeurope.cloudapp.azure.com
+  paths:
+  - path: /
+    backend:
+      serviceName: app-nginx
+      servicePort: 80
