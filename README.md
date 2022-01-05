@@ -21,3 +21,4 @@ az k8s-configuration flux create \
 -k name=infra path=./src/gitops/clusters/${env}/infra prune=true sync_interval=30s  \
 -k name=apps path=./src/gitops/clusters/${env}/apps prune=true sync_interval=30s dependsOn=infra
 ```
+![](./flux-gitops-kustomize.png)
