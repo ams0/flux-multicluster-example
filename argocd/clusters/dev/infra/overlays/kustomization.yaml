@@ -5,5 +5,5 @@ resources:
 - ../../../../infra/cert-manager
 #- ../../../../infra/ingress
 - ns.yaml
-#patchesStrategicMerge:
-# - values/cert-manager/cert-manager-values.yaml
+patchesStrategicMerge:
+ - values/cert-manager/cert-manager-values.yaml
