@@ -3,6 +3,6 @@ kind: Kustomization
 namespace: infra
 resources:
 - ns.yaml
-- ../../../infra/cert-manager 
-patchesStrategicMerge:
-  - values/cert-manager/cert-manager-values.yaml
+#- ../../../infra/cert-manager 
+#patchesStrategicMerge:
+#  - values/cert-manager/cert-manager-values.yaml
