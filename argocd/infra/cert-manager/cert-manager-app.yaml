@@ -18,12 +18,9 @@ spec:
     helm:
       values: |
         installCRDs: true
-        prometheus:
-          servicemonitor:
-            enabled: true	
     chart: cert-manager
     repoURL: https://charts.jetstack.io
-    targetRevision: "1.4.0"
+    targetRevision: "1.6.1"
   syncPolicy:
     automated:
       prune: true
