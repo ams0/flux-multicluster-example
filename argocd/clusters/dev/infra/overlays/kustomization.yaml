@@ -4,5 +4,5 @@ namespace: bgdk
 resources:
 - ../../base
 - ns.yaml
-patchesStrategicMerge:
- - values/cert-manager/cert-manager-values.yaml
+#patchesStrategicMerge:
+# - values/cert-manager/cert-manager-values.yaml
