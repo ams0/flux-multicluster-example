@@ -2,7 +2,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: bgdk
 resources:
-- ../../base
+- ../../../../infra/cert-manager
+#- ../../../../infra/ingress
 - ns.yaml
 #patchesStrategicMerge:
 # - values/cert-manager/cert-manager-values.yaml
