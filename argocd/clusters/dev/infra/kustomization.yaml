@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - ../../../infra/cert-manager 
 patchesStrategicMerge:
-  - cert-manager-values.yaml
+  - values/cert-manager/cert-manager-values.yaml
