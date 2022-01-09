@@ -1,28 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: infra
-  namespace: argocd
+  name: infra-dev
+  namespace: infra
 spec:
   destination:
-    namespace: argocd
+    namespace: infra
     server: https://kubernetes.default.svc
   project: default
   source:
-    directory:
-      recurse: true
-    path: argocd/clusters/dev/infra/
-    repoURL: https://github.com/ams0/flux-multicluster-example.git
+    path: cluster/dev/infra/overlays #apps/bgd/overlays/bgdk
+    repoURL: https://github.com/ams0/flux-multicluster-example
     targetRevision: argocd
   syncPolicy:
     automated:
       prune: true
-      selfHeal: true
-    retry:
-      backoff:
-        duration: 5s
-        factor: 2
-        maxDuration: 10m
-      limit: -1
+      selfHeal: false
     syncOptions:
     - CreateNamespace=true
