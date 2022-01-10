@@ -1,0 +1,4 @@
+namespace: nats
+resources:
+  - nats.yaml
+  - stan.yaml
