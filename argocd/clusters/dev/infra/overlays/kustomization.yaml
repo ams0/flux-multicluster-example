@@ -3,7 +3,8 @@ kind: Kustomization
 namespace: argocd
 resources:
 - ../../../../infra/cert-manager
-#- ../../../../infra/ingress
+- ../../../../infra/traefik
 - ns.yaml
 patchesStrategicMerge:
  - values/cert-manager/cert-manager-values.yaml
+ - values/traefik/traefik-values.yaml

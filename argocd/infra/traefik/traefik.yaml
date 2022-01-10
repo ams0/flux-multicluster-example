@@ -1,0 +1,80 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+spec:
+  destination:
+    namespace: ingress
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    helm:
+      values: |
+        deployment:
+          replicas: 3
+        ingressClass:
+          enabled: true
+          isDefaultClass: true
+        logs:
+          access:
+            enabled: true
+        service:
+          annotations:
+            service.beta.kubernetes.io/azure-load-balancer-internal: "true"
+          enabled: true
+          type: LoadBalancer
+    chart: traefik
+    repoURL: https://helm.traefik.io/traefik
+    targetRevision: "10.9.1"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    retry:
+      limit: -1 # number of failed sync attempt retries; unlimited number of attempts if less than 0
+      backoff:
+        duration: 5s # the amount to back off. Default unit is seconds, but could also be a duration (e.g. "2m", "1h")
+        factor: 2 # a factor to multiply the base duration after each failed retry
+        maxDuration: 10m # the maximum amount of time allowed for the backoff strategy
+
+
+
+
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik
+  namespace: ingress
+spec:
+  releaseName: traefik
+  targetNamespace: ingress
+  chart:
+    spec:
+      chart: traefik
+      version: "10.9.1"
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: ingress
+  interval: 30s
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  values:
+    deployment:
+      replicas: 3
+    ingressClass:
+      enabled: true
+      isDefaultClass: true
+    logs:
+      access:
+        enabled: true
+    service:
+      enabled: true
+      type: LoadBalancer
+      # Additional annotations applied to both TCP and UDP services (e.g. for cloud provider specific config)
+#      annotations:
+#        service.beta.kubernetes.io/azure-load-balancer-internal: "true"
