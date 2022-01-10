@@ -5,8 +5,10 @@ resources:
 - ../../../../infra/cert-manager
 - ../../../../infra/traefik
 - ../../../../infra/nats
+- ../../../../infra/keycloak
 - ns.yaml
 patchesStrategicMerge:
  - ./values/cert-manager/cert-manager-values.yaml
  - ./values/traefik/traefik-values.yaml
  - ./values/nats/nats-values.yaml
+ - ./values/keycloak/keycloak-values.yaml
