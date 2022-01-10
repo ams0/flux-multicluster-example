@@ -6,6 +6,5 @@ spec:
   source:
     helm:
       values: |
-        deployment:
-          labels: 
-            environment: dev
+        podLabels:
+          environment: dev

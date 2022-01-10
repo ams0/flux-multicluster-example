@@ -6,5 +6,5 @@ resources:
 - ../../../../infra/traefik
 - ns.yaml
 patchesStrategicMerge:
- - values/cert-manager/cert-manager-values.yaml
- - values/traefik/traefik-values.yaml
+ - ./values/cert-manager/cert-manager-values.yaml
+ - ./values/traefik/traefik-values.yaml
