@@ -1,0 +1,11 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nats
+spec:
+  source:
+    helm:
+      values: |
+        cluster:
+          enabled: true
+          replicas: 2
