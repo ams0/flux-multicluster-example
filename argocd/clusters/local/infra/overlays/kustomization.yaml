@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: argocd
+resources:
+- ../../../../infra/cert-manager
+- ../../../../infra/traefik
+- ../../../../infra/nats
+- ../../../../infra/keycloak
+- ns.yaml
+patchesStrategicMerge:
+ - ./values/cert-manager/cert-manager-values.yaml
+ - ./values/ingress-nginx/ingress-nginx-values.yaml
+ - ./values/keycloak/keycloak-values.yaml

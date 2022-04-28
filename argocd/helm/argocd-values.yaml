@@ -1,0 +1,112 @@
+global:
+  podLabels: 
+    promtail: "true"
+  networkPolicy:
+    create: true
+    defaultDenyIngress: true
+server:
+  config:
+#     dex.config: |
+#       connectors:
+# - type: github
+#   # Required field for connector id.
+#   id: github
+#   # Required field for connector name.
+#   name: GitHub
+#   config:
+#     # Credentials can be string literals or pulled from the environment.
+#     clientID: $GITHUB_CLIENT_ID
+#     clientSecret: $GITHUB_CLIENT_SECRET
+#     redirectURI: https://argo.cookingwithazure.com/dex/callback
+#     orgs:
+#     - name: microsoft
+#       teams:
+#       - DXNL
+#     loadAllGroups: false
+
+    statusbadge.enabled: "true"
+    url: https://argo.cookingwithazure.com
+  extraArgs:
+    - --insecure
+  ingress:
+    enabled: true
+    annotations:
+      external-dns.alpha.kubernetes.io/hostname: argo.cookingwithazure.com
+      cert-manager.io/cluster-issuer: letsencrypt-prod
+    ingressClassName: "nginx"
+    hosts:
+       - argo.cookingwithazure.com
+    paths:
+      - /
+    pathType: Prefix
+    tls:
+      - secretName: argocd-tls-certificate
+        hosts:
+          - argo.cookingwithazure.com
+
+extraObjects:
+  - apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
+    metadata:
+      name: infra-local
+      namespace: argocd
+    spec:
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+      description: Infrastructure components for local cluster
+      destinations:
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+      sourceRepos:
+      - '*'
+  - apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
+    metadata:
+      name: infra-dev
+      namespace: argocd
+    spec:
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+      description: Infrastructure components for dev cluster
+      destinations:
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+      sourceRepos:
+      - '*'
+  - apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
+    metadata:
+      name: infra-prd
+      namespace: argocd
+    spec:
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+      description: Infrastructure components for prd cluster
+      destinations:
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+      sourceRepos:
+      - '*'
+  - apiVersion: argoproj.io/v1alpha1
+    kind: Application
+    metadata:
+      name: rootofroot
+      namespace: argocd
+    spec:
+      destination:
+        namespace: argocd
+        server: https://kubernetes.default.svc
+      project: local
+      source:
+        path: src/roots/ #gets all roots
+        repoURL: https://github.com/ams0/flux-multicluster-example
+        targetRevision: argocd
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: false
+        syncOptions:
+        - CreateNamespace=true
