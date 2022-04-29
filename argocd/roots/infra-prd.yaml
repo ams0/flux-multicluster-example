@@ -7,7 +7,7 @@ spec:
   destination:
     namespace: infra
     server: https://kubernetes.default.svc
-  project: default
+  project: infra-prd
   source:
     path: argocd/clusters/prd/infra/overlays #apps/bgd/overlays/bgdk
     repoURL: https://github.com/ams0/flux-multicluster-example

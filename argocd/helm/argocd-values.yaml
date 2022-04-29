@@ -48,6 +48,21 @@ extraObjects:
   - apiVersion: argoproj.io/v1alpha1
     kind: AppProject
     metadata:
+      name: root
+      namespace: argocd
+    spec:
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+      description: Project to host root apps
+      destinations:
+      - namespace: '*'
+        server: https://kubernetes.default.svc
+      sourceRepos:
+      - '*'
+  - apiVersion: argoproj.io/v1alpha1
+    kind: AppProject
+    metadata:
       name: infra-local
       namespace: argocd
     spec:
@@ -99,9 +114,9 @@ extraObjects:
       destination:
         namespace: argocd
         server: https://kubernetes.default.svc
-      project: local
+      project: root
       source:
-        path: src/roots/ #gets all roots
+        path: argocd/roots #gets all roots
         repoURL: https://github.com/ams0/flux-multicluster-example
         targetRevision: argocd
       syncPolicy:

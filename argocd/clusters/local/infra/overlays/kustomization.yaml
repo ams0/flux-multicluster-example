@@ -3,8 +3,7 @@ kind: Kustomization
 namespace: argocd
 resources:
 - ../../../../infra/cert-manager
-- ../../../../infra/traefik
-- ../../../../infra/nats
+- ../../../../infra/ingress-nginx
 - ../../../../infra/keycloak
 - ns.yaml
 patchesStrategicMerge:
