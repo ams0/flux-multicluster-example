@@ -1,0 +1,10 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ingress-nginx
+spec:
+  source:
+    helm:
+      values: |
+        podLabels:
+          environment: local

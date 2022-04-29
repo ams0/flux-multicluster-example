@@ -7,5 +7,5 @@ spec:
     helm:
       values: |
         podLabels:
-          environment: hub
+          environment: local
     targetRevision: "v1.6.1"
